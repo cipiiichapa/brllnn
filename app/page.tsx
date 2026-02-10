@@ -1,54 +1,105 @@
 "use client";
 import React, { useState } from 'react';
 
-// Data Kartu - Kamu bisa tambah atau ubah kata-katanya di sini
 const flashcards = [
-  { id: 1, english: "Archipelago", indonesia: "Kepulauan", hint: "Indonesia adalah negara kepulauan terbesar." },
-  { id: 2, english: "Hospitality", indonesia: "Keramahtamahan", hint: "Orang Indonesia dikenal sangat ramah." },
-  { id: 3, english: "Heritage", indonesia: "Warisan Budaya", hint: "Batik adalah warisan budaya dunia (UNESCO)." },
-  { id: 4, english: "Biodiversity", indonesia: "Keanekaragaman Hayati", hint: "Hutan kita punya banyak jenis flora & fauna." },
-  { id: 5, english: "Spices", indonesia: "Rempah-rempah", hint: "Cengkeh dan pala adalah contoh rempah asli kita." },
-  { id: 6, english: "Teacher", indonesia: "Guru", hint: "Seseorang yang membagikan ilmu di sekolah." },
-  { id: 7, english: "School", indonesia: "Sekolah", hint: "Tempat kita belajar dan bertemu teman-teman." },
+  { id: 1, en: "Archipelago", idn: "Kepulauan", hint: "Indonesia is a big archipelago." },
+  { id: 2, en: "Hospitality", idn: "Keramahtamahan", hint: "People are very kind." },
+  { id: 3, en: "Heritage", idn: "Warisan Budaya", hint: "Batik is our heritage." },
+  { id: 4, en: "Teacher", idn: "Guru", hint: "A person who teaches." },
+  { id: 5, en: "School", idn: "Sekolah", hint: "A place to learn." }
 ];
 
-export default function BrillianApp() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  // Fungsi navigasi
-  const handleNext = () => {
-    setIsFlipped(false);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % flashcards.length);
-    }, 150);
-  };
-
-  const handlePrev = () => {
-    setIsFlipped(false);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length);
-    }, 150);
-  };
+export default function Home() {
+  const [index, setIndex] = useState(0);
+  const [flip, setFlip] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6 font-sans text-slate-900">
-      
-      {/* Judul Website */}
-      <header className="mb-12 text-center">
-        <h1 className="text-5xl font-extrabold tracking-tight text-indigo-900">
-          Brillian<span className="text-blue-600">.</span>
-        </h1>
-        <p className="mt-2 text-indigo-600 font-medium">Kartu Belajar Dwibahasa Interaktif</p>
-      </header>
+    <main style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#f0f4f8',
+      fontFamily: 'sans-serif',
+      padding: '20px'
+    }}>
+      <h1 style={{ color: '#1a365d', marginBottom: '10px' }}>BRILLIAN.</h1>
+      <p style={{ color: '#4a5568', marginBottom: '30px' }}>Interactive Flashcards</p>
 
-      {/* Area Kartu */}
-      <div className="w-full max-w-md">
-        <div 
-          onClick={() => setIsFlipped(!isFlipped)}
-          className="group h-72 w-full [perspective:1000px] cursor-pointer"
-        >
-          <div className={`relative h-full w-full rounded-3xl shadow-2xl transition-all duration-500 [transform-style:preserve-3d] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}>
-            
-            {/* Sisi Depan (Inggris) */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center
+      <div 
+        onClick={() => setFlip(!flip)}
+        style={{
+          width: '300px',
+          height: '400px',
+          perspective: '1000px',
+          cursor: 'pointer'
+        }}
+      >
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          transition: 'transform 0.6s',
+          transformStyle: 'preserve-3d',
+          transform: flip ? 'rotateY(180deg)' : 'rotateY(0deg)'
+        }}>
+          {/* Sisi Depan */}
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backfaceVisibility: 'hidden',
+            backgroundColor: 'white',
+            borderRadius: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+            border: '2px solid #e2e8f0'
+          }}>
+            <small style={{ color: '#3182ce', fontWeight: 'bold' }}>ENGLISH</small>
+            <h2 style={{ fontSize: '2rem', color: '#2d3748' }}>{flashcards[index].en}</h2>
+            <p style={{ fontSize: '0.8rem', color: '#a0aec0', marginTop: '20px' }}>Tap to Flip</p>
+          </div>
+
+          {/* Sisi Belakang */}
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backfaceVisibility: 'hidden',
+            backgroundColor: '#3182ce',
+            color: 'white',
+            borderRadius: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: 'rotateY(180deg)',
+            boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+          }}>
+            <small style={{ fontWeight: 'bold', opacity: 0.8 }}>INDONESIA</small>
+            <h2 style={{ fontSize: '2rem' }}>{flashcards[index].idn}</h2>
+            <p style={{ padding: '0 20px', textAlign: 'center', fontSize: '0.9rem', marginTop: '10px' }}>
+              "{flashcards[index].hint}"
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ marginTop: '30px', display: 'flex', gap: '20px', alignItems: 'center' }}>
+        <button onClick={(e) => { e.stopPropagation(); setFlip(false); setIndex((index - 1 + flashcards.length) % flashcards.length); }}
+          style={{ padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: 'white', cursor: 'pointer', fontWeight: 'bold' }}>
+          Back
+        </button>
+        <span style={{ fontWeight: 'bold', color: '#1a365d' }}>{index + 1} / {flashcards.length}</span>
+        <button onClick={(e) => { e.stopPropagation(); setFlip(false); setIndex((index + 1) % flashcards.length); }}
+          style={{ padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#1a365d', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>
+          Next
+        </button>
+      </div>
+    </main>
+  );
+}
