@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 
 export default function RedirectPage() {
   useEffect(() => {
-    // GANTI link di bawah ini dengan link website Canva kamu
-    window.location.href = "https://brllnn-site.my.canva.site";
+    // GANTI link di bawah ini dengan link Canva kamu yang panjang tadi
+    window.location.href = "https://proposalgrandopeningdorengvsbanjar.my.canva.site/brllnn-gamee";
   }, []);
 
   return (
@@ -14,9 +14,10 @@ export default function RedirectPage() {
       alignItems: 'center', 
       height: '100vh',
       fontFamily: 'sans-serif',
-      backgroundColor: '#f8f9fa'
+      backgroundColor: '#ffffff',
+      color: '#333'
     }}>
-      <p>Memindahkan kamu ke Brillian...</p>
+      <p>Sedang membuka Brillian...</p>
     </div>
   );
 }
