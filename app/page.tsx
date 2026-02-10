@@ -1,24 +1,22 @@
-export default function Home() {
+"use client";
+import { useEffect } from 'react';
+
+export default function RedirectPage() {
+  useEffect(() => {
+    // GANTI link di bawah ini dengan link website Canva kamu
+    window.location.href = "https://brllnn-site.my.canva.site";
+  }, []);
+
   return (
-    <div style={{
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
       height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#1a365d',
-      color: 'white',
       fontFamily: 'sans-serif',
-      textAlign: 'center',
-      padding: '20px'
+      backgroundColor: '#f8f9fa'
     }}>
-      <h1 style={{ fontSize: '3rem', margin: '0' }}>BRILLIAN.</h1>
-      <p style={{ fontSize: '1.2rem', opacity: 0.8, marginTop: '10px' }}>
-        Pembaruan Berhasil!
-      </p>
-      <p style={{ marginTop: '20px', fontSize: '0.9rem' }}>
-        Jika masih melihat layar hitam, silakan tekan <b>Ctrl + F5</b>.
-      </p>
+      <p>Memindahkan kamu ke Brillian...</p>
     </div>
   );
 }
