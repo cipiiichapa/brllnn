@@ -1,34 +1,93 @@
-{
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
+"use client";
+
+import React, { useState } from 'react';
+
+// Data Kartu - Kamu bisa tambah sendiri di sini
+const flashcards = [
+  { id: 1, english: "Archipelago", indonesia: "Kepulauan", hint: "Indonesia is the largest..." },
+  { id: 2, english: "Hospitality", indonesia: "Keramahtamahan", hint: "Indonesian people are famous for their..." },
+  { id: 3, english: "Heritage", indonesia: "Warisan Budaya", hint: "Batik is a world..." },
+  { id: 4, english: "Biodiversity", indonesia: "Keanekaragaman Hayati", hint: "Tropical rainforests have high..." },
+  { id: 5, english: "Spices", indonesia: "Rempah-rempah", hint: "Pepper and nutmeg are..." },
+];
+
+export default function BrillianApp() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const nextCard = () => {
+    setIsFlipped(false);
+    setCurrentIndex((prev) => (prev + 1) % flashcards.length);
+  };
+
+  const prevCard = () => {
+    setIsFlipped(false);
+    setCurrentIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length);
+  };
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6 font-sans">
+      {/* Header */}
+      <header className="mb-12 text-center">
+        <h1 className="text-4xl font-extrabold tracking-tight text-indigo-900 sm:text-5xl">
+          Brillian<span className="text-blue-600">.</span>
+        </h1>
+        <p className="mt-2 text-indigo-600 font-medium">Interactive Bilingual Game Cards</p>
+      </header>
+
+      {/* Card Section */}
+      <div className="w-full max-w-md">
+        <div 
+          onClick={() => setIsFlipped(!isFlipped)}
+          className={`relative h-64 w-full cursor-pointer transition-all duration-500 [transform-style:preserve-3d] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}
+        >
+          {/* Front Side (English) */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl bg-white shadow-xl [backface-visibility:hidden] border-2 border-indigo-50">
+            <span className="absolute top-4 left-6 text-xs font-bold uppercase tracking-widest text-indigo-300">English</span>
+            <h2 className="px-6 text-center text-3xl font-bold text-indigo-800">
+              {flashcards[currentIndex].english}
+            </h2>
+            <p className="mt-4 text-sm text-gray-400 italic">Click to see translation</p>
+          </div>
+
+          {/* Back Side (Indonesia) */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl bg-indigo-600 shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)]">
+            <span className="absolute top-4 left-6 text-xs font-bold uppercase tracking-widest text-indigo-200">Indonesia</span>
+            <h2 className="px-6 text-center text-3xl font-bold text-white">
+              {flashcards[currentIndex].indonesia}
+            </h2>
+            <p className="mt-4 px-8 text-center text-sm text-indigo-100 opacity-80">
+              "{flashcards[currentIndex].hint}"
+            </p>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="mt-10 flex items-center justify-between px-4">
+          <button 
+            onClick={prevCard}
+            className="rounded-full bg-white p-4 shadow-md transition-transform hover:scale-110 active:scale-95 text-indigo-600"
+          >
+            ← Prev
+          </button>
+          
+          <div className="text-sm font-bold text-indigo-900">
+            {currentIndex + 1} / {flashcards.length}
+          </div>
+
+          <button 
+            onClick={nextCard}
+            className="rounded-full bg-indigo-600 p-4 shadow-md transition-transform hover:scale-110 active:scale-95 text-white font-semibold"
+          >
+            Next →
+          </button>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-20 text-sm text-indigo-400">
+        Built with Brillian Spirit &bull; 2026
+      </footer>
+    </div>
+  );
 }
